@@ -2,7 +2,6 @@
 namespace app\admin\controller;
 
 use app\BaseController;
-use app\common\Aes;
 
 class Index extends BaseController
 {

@@ -6,7 +6,7 @@ class Aes
 {
     private const key = "2ee385d4e42e07f2c539b597559e70ee";
 
-    private const method = "AES-128-ECB";
+    private const method = "AES-256-CBC";
 
     private static function getIv(): string
     {
@@ -16,14 +16,13 @@ class Aes
 
     public static function encrypt(string $value): string
     {
-        $key = substr(openssl_digest(openssl_digest(self::key, 'sha1', true), 'sha1', true), 0, 16);
-        $encrypted = openssl_encrypt($value, self::method, $key, OPENSSL_RAW_DATA);
-        return $encrypted = base64_encode($encrypted);
+        $s = openssl_encrypt($value, self::method, self::key, OPENSSL_RAW_DATA, 'D1F07625B8E04A5D');
+        return base64_encode($s);
     }
 
     public static function decrypt(string $value): string
     {
-        $key = substr(openssl_digest(openssl_digest(self::key, 'sha1', true), 'sha1', true), 0, 16);
-        return openssl_decrypt(base64_decode($value), self::method, $key, OPENSSL_RAW_DATA);
+        $encrypted = base64_decode($value);
+        return openssl_decrypt($encrypted, self::method, self::key, OPENSSL_RAW_DATA, "D1F07625B8E04A5D");
     }
 }
